@@ -1,0 +1,97 @@
+/* src/components/sections/RegisterForm/RegisterForm.css */
+
+.register-section {
+  max-width: 500px; /* Un poco más estrecho para registro */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+.form-header h3 {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 400;
+}
+
+.register-form {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.error-msg {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* BOTÓN (Igual que contacto) */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* --- MODO OSCURO --- */
+body.dark .register-form {
+  background-color: #2d2d2d;
+  border: 1px solid #444;
+}
+
+body.dark .form-header h2 { color: #60a5fa; }
+body.dark .form-header h3 { color: #ccc; }
+body.dark .form-group label { color: #e5e5e5; }
+
+body.dark .form-group input {
+  background-color: #1a1a1a;
+  border-color: #555;
+  color: white;
+}
+
+body.dark .submit-btn {
+  background-color: #3b82f6;
+}

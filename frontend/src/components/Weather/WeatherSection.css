@@ -1,0 +1,67 @@
+.weather-section-container {
+    /* Degradado original, pero aplicado solo a este contenedor */
+    background: linear-gradient(135deg, #000000 0%, #0984e3 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 3rem; /* Espacio para separar de la lista de usuarios */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.weather-content h2 {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 10px;
+}
+
+.weather-controls {
+    display: flex;
+    flex-wrap: wrap; /* Para que se adapte a movil */
+    gap: 15px;
+    align-items: center;
+}
+
+.weather-controls input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 200px;
+}
+
+.weather-controls button {
+    padding: 10px 20px;
+    background-color: #ff7675;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.weather-badge {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 50px;
+    margin-left: 10px;
+    animation: fadeIn 0.5s ease;
+}
+
+.weather-badge img {
+    width: 40px;
+    height: 40px;
+}
+
+.weather-error {
+    color: #ff7675;
+    background: rgba(255,255,255,0.9);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

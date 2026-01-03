@@ -1,0 +1,29 @@
+/* src/components/ThemeToggle/ThemeToggle.css */
+
+/* Estilo base del botón (Modo Claro) */
+.theme-toggle-btn {
+  background: #f0f0f0; /* Un fondo gris claro para contraste */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  /* COLOR DE TEXTO PARA MODO CLARO */
+  color: #333333; 
+  transition: all 0.3s ease;
+}
+
+/* Estilo cuando está activo el Modo Oscuro */
+body.dark .theme-toggle-btn {
+  background: #333333; /* Fondo oscuro para el botón */
+  border-color: #555;
+  /* COLOR DE TEXTO PARA MODO OSCURO (Blanco) */
+  color: #ffffff; 
+}
+
+body.dark .theme-toggle-btn:hover {
+    background: #444;
+}

@@ -1,0 +1,102 @@
+### ==========================================
+### CONFIGURACIÓN Y VARIABLES GLOBALES
+### ==========================================
+@baseUrl = http://localhost:5000/api
+@contentType = application/json
+
+### ==========================================
+### PASO 0: CREAR USUARIO (Solo ejecutar una vez)
+### ==========================================
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Super Admin",
+  "email": "admin@test.com",
+  "password": "123456Password",
+  "phone": "5555555555"
+}
+
+### 
+
+# 1. PRIMERO: Haz click en "Send Request" aquí para loguearte
+# (IMPORTANTE: Antes de esto, ve a MongoDB y cambia el role de este usuario a "admin")
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "admin@test.com", 
+    "password": "123456Password"
+}
+
+###
+# 2. SEGUNDO: La extensión guardará el token automáticamente aquí
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhZGIwM2Y2YWQwNzBmMzA1NzlkZTYiLCJyb2xlIjoiYWRtaW4iLCJpc3MiOiJzcGEtYmFja2VuZCIsImF1ZCI6InNwYS1mcm9udGVuZCIsImlhdCI6MTc2NjUxNTM4NCwiZXhwIjoxNzY2NjAxNzg0fQ.xvdLtT3drSvTYi7L7SRUhLlOrJbvrxaZKTXQZPchdnk
+
+# 3. TERCERO: Cuando crees un mensaje abajo (Paso "Submit"), copia su ID de la respuesta y pégalo aquí
+# (Esto es necesario para probar las funciones de borrar, responder o ver detalle)
+@message_id = 694add02dc3515d987aedd1b
+
+
+### ==========================================
+### RUTAS PÚBLICAS (No requieren tokens)
+### ==========================================
+
+### Get Contact Info
+GET {{baseUrl}}/contact/info
+
+### Submit Contact Message (Enviar mensaje nuevo)
+# @name createMessage
+POST {{baseUrl}}/contact/submit
+Content-Type: {{contentType}}
+
+{
+  "name": "María García",
+  "email": "maria@example.com",
+  "phone": "+34 612 345 678",
+  "subject": "Consulta sobre productos",
+  "message": "Hola, me gustaría obtener más información sobre los productos premium.",
+  "category": "sales"
+}
+
+
+### ==========================================
+### RUTAS ADMINISTRATIVAS (Requieren token)
+### ==========================================
+
+### Get Contact Messages (Listar todos)
+GET {{baseUrl}}/contact/messages?page=1&limit=10
+Authorization: Bearer {{admin_token}}
+
+### Get Contact Stats (Estadísticas)
+GET {{baseUrl}}/contact/stats
+Authorization: Bearer {{admin_token}}
+
+### Get Specific Message (Ver uno solo usando la variable message_id)
+GET {{baseUrl}}/contact/messages/{{message_id}}
+Authorization: Bearer {{admin_token}}
+
+### Update Message Status (Cambiar estado)
+PUT {{baseUrl}}/contact/messages/{{message_id}}/status
+Authorization: Bearer {{admin_token}}
+Content-Type: {{contentType}}
+
+{
+  "status": "in_progress",
+  "priority": "high"
+}
+
+### Respond to Message (Responder)
+POST {{baseUrl}}/contact/messages/{{message_id}}/respond
+Authorization: Bearer {{admin_token}}
+Content-Type: {{contentType}}
+
+{
+  "responseMessage": "Hola María, gracias por tu consulta. Te contactaremos pronto."
+}
+
+### Delete Message (Eliminar)
+DELETE {{baseUrl}}/contact/messages/{{message_id}}
+Authorization: Bearer {{admin_token}}

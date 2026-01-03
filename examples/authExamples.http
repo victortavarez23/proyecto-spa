@@ -1,0 +1,46 @@
+### Health Check
+GET http://localhost:5000/api/health
+
+### Get Auth Info
+GET http://localhost:5000/api/auth/info
+
+### Register New User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Juan Pérez",
+    "email": "juan@example.com",
+    "password": "Password123"
+}
+
+### Login User
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "juan@example.com",
+    "password": "Password123"
+}
+
+### Get Profile (Protected)
+# NOTA: Reemplaza {{auth_token}} con el token real que recibas en el Login
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhMTcwNDgwNDVmZjk1MjZjNDUyZGUiLCJyb2xlIjoidXNlciIsImlzcyI6InNwYS1iYWNrZW5kIiwiYXVkIjoic3BhLWZyb250ZW5kIiwiaWF0IjoxNzY2NDYzMjM2LCJleHAiOjE3NjY1NDk2MzZ9.3mCuCtv3itHwdoFDXsDTpKmGvnXbeJuZQG5yDCM5k5M
+
+### Verify Token
+GET http://localhost:5000/api/auth/verify
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhMTcwNDgwNDVmZjk1MjZjNDUyZGUiLCJyb2xlIjoidXNlciIsImlzcyI6InNwYS1iYWNrZW5kIiwiYXVkIjoic3BhLWZyb250ZW5kIiwiaWF0IjoxNzY2NDYzMjM2LCJleHAiOjE3NjY1NDk2MzZ9.3mCuCtv3itHwdoFDXsDTpKmGvnXbeJuZQG5yDCM5k5M
+
+### Update Profile
+PUT http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhMTcwNDgwNDVmZjk1MjZjNDUyZGUiLCJyb2xlIjoidXNlciIsImlzcyI6InNwYS1iYWNrZW5kIiwiYXVkIjoic3BhLWZyb250ZW5kIiwiaWF0IjoxNzY2NDYzMjM2LCJleHAiOjE3NjY1NDk2MzZ9.3mCuCtv3itHwdoFDXsDTpKmGvnXbeJuZQG5yDCM5k5M
+Content-Type: application/json
+
+{
+    "name": "Juan Carlos Pérez"
+}
+
+### Logout
+POST http://localhost:5000/api/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhMTcwNDgwNDVmZjk1MjZjNDUyZGUiLCJyb2xlIjoidXNlciIsImlzcyI6InNwYS1iYWNrZW5kIiwiYXVkIjoic3BhLWZyb250ZW5kIiwiaWF0IjoxNzY2NDYzMjM2LCJleHAiOjE3NjY1NDk2MzZ9.3mCuCtv3itHwdoFDXsDTpKmGvnXbeJuZQG5yDCM5k5M

@@ -1,0 +1,11 @@
+# --- IGNORAR DEPENDENCIAS ---
+node_modules/
+**/node_modules/
+
+# --- IGNORAR SECRETOS (En cualquier nivel) ---
+.env
+**/.env
+
+# --- IGNORAR ARCHIVOS DE SISTEMA ---
+.DS_Store
+*.log

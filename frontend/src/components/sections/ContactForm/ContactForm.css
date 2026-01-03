@@ -1,0 +1,179 @@
+/* Contenedor principal */
+.contact-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Títulos centrados */
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    font-size: 2rem;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.form-header h3 {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 400;
+}
+
+/* El formulario en sí */
+.contact-form {
+    background-color: #ffffff; /* Fondo blanco en modo claro */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* Checkbox alineado */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+/* Botón de Enviar (Solución a "No se ve") */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* --- MODO OSCURO (Dark Mode) --- */
+/* Cuando el body tiene la clase .dark, cambiamos estos estilos */
+
+body.dark .contact-form {
+    background-color: #2d2d2d; /* Fondo gris oscuro para la tarjeta */
+    border: 1px solid #444;
+}
+
+body.dark .form-header h2 {
+    color: #60a5fa; /* Azul más claro */
+}
+
+body.dark .form-header h3 {
+    color: #ccc;
+}
+
+body.dark .form-group label {
+    color: #e5e5e5;
+}
+
+body.dark .form-group input,
+body.dark .form-group textarea {
+    background-color: #1a1a1a;
+    border-color: #555;
+    color: white;
+}
+
+body.dark .submit-btn {
+    background-color: #3b82f6; /* Azul brillante para contraste */
+}
+
+/* 1. Hacemos la cajita más grande y azul */
+.checkbox-group input[type="checkbox"] {
+  appearance: none; /* Quitamos el estilo por defecto antiguo */
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+/* 2. Cuando está marcado (checked) */
+.checkbox-group input[type="checkbox"]:checked {
+  background-color: #2563eb; /* Azul de marca */
+  border-color: #2563eb;
+}
+
+/* 3. Dibujamos el "tick" (palomita) manualmente con CSS */
+.checkbox-group input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white; /* El tick será blanco */
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.checkbox-group input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+/* 4. Mejoramos la etiqueta del texto */
+.checkbox-group label {
+  cursor: pointer;
+  font-size: 0.95rem;
+  user-select: none; /* Evita que se seleccione el texto al hacer clic */
+  color: #555;
+}
+
+/* --- AJUSTE PARA MODO OSCURO --- */
+body.dark .checkbox-group input[type="checkbox"] {
+  background-color: #2d2d2d; /* Fondo oscuro desmarcado */
+  border-color: #555;
+}
+
+body.dark .checkbox-group input[type="checkbox"]:checked {
+  background-color: #3b82f6; /* Azul brillante marcado */
+  border-color: #3b82f6;
+}
+
+body.dark .checkbox-group label {
+  color: #e5e5e5; /* Texto claro */
+}

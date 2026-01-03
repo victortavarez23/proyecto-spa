@@ -1,0 +1,86 @@
+### -------------------------------------------------------
+### CONFIGURACIÓN INICIAL
+### -------------------------------------------------------
+@url = http://localhost:5000/api
+@admin_email = admin@example.com
+@admin_password = password123
+# Pega aquí el token que obtengas al hacer login como admin
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRhMTU2MGJkMjhjNzc0ZjI0YzA3YWEiLCJyb2xlIjoiYWRtaW4iLCJpc3MiOiJzcGEtYmFja2VuZCIsImF1ZCI6InNwYS1mcm9udGVuZCIsImlhdCI6MTc2NjUwOTUzNywiZXhwIjoxNzY2NTk1OTM3fQ.72pI4JrHdaRcgoiKP53SfLHOYYLjLQGOkf-pks41Mfo
+
+### 1. Login como Admin (Necesario para Crear/Editar/Borrar)
+# Si usaste 'npm run seed', este usuario debería existir.
+# Si no, usa tu usuario registrado y cambia su rol a 'admin' en MongoDB o registra uno nuevo.
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{admin_email}}",
+    "password": "{{admin_password}}"
+}
+
+### -------------------------------------------------------
+### RUTAS PÚBLICAS (Cualquiera puede ver)
+### -------------------------------------------------------
+
+### 2. Listar Productos (Simple)
+GET {{url}}/products
+
+### 3. Listar con Filtros y Paginación
+# Filtra: Precio entre 100 y 1000, Categoría electronics, Página 1, Límite 5
+GET {{url}}/products?minPrice=100&maxPrice=1000&category=electronics&page=1&limit=5
+
+### 4. Buscar Productos
+GET {{url}}/products/search?q=phone
+
+### 5. Ver Productos Destacados
+GET {{url}}/products/featured
+
+### 6. Obtener Producto por ID
+# REEMPLAZA ESTE ID con uno real que veas en el listado de arriba
+@productId = 694acca4480b270d58c4bbf5
+GET {{url}}/products/{{productId}}
+
+
+### -------------------------------------------------------
+### RUTAS DE ADMINISTRADOR (Requieren Token)
+### -------------------------------------------------------
+
+### 7. Crear Nuevo Producto
+POST {{url}}/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Laptop Gamer Pro X",
+    "description": "La mejor laptop para gaming con RTX 4090",
+    "price": 2499.99,
+    "category": "electronics",
+    "stock": 10,
+    "brand": "TechMaster"
+}
+
+### 8. Actualizar Producto
+# Usa el ID del producto que acabas de crear
+PUT {{url}}/products/{{productId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "price": 2299.99,
+    "stock": 8,
+    "name": "Laptop Gamer Pro X - Edición Especial"
+}
+
+### 9. Eliminar Producto (Soft Delete)
+DELETE {{url}}/products/{{productId}}
+Authorization: Bearer {{token}}
+
+### 10. Intentar Crear con Datos Inválidos (Prueba de Validación)
+POST {{url}}/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "", 
+    "price": -50
+}

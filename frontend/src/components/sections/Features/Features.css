@@ -1,0 +1,45 @@
+.features {
+  background-color: #f9fafb; /* Fondo gris muy suave para diferenciar del Hero */
+}
+
+.features__header h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-text, #333);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Móvil: 1 columna */
+  gap: 2rem;
+}
+
+.features__card {
+  transition: transform 0.3s ease;
+  height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+}
+
+.features__card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-primary, #2563eb);
+}
+
+.card-text {
+  color: var(--color-text-light, #555);
+  line-height: 1.6;
+}
+
+/* Tablet y Desktop */
+@media (min-width: 768px) {
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  }
+}

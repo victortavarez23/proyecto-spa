@@ -1,0 +1,48 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh; /* Ocupa buena parte de la pantalla */
+  text-align: center;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.not-found h1 {
+  font-size: 3rem;
+  color: #ef4444; /* Un rojo suave para indicar error */
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Reutilizamos el estilo de botón que usaste en la página de éxito */
+.home-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.home-link:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modo oscuro */
+body.dark .not-found h1 { color: #f87171; }
+body.dark .not-found p { color: #ccc; }

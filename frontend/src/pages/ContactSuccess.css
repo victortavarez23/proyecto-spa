@@ -1,0 +1,30 @@
+/* src/pages/ContactSuccess.css */
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh; /* Que ocupe buena parte de la pantalla */
+  animation: fadeIn 0.5s ease-in;
+}
+
+.contact-success h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.home-link {
+  transition: transform 0.2s ease, background-color 0.2s;
+  font-weight: 600;
+}
+
+.home-link:hover {
+  background-color: #000 !important;
+  transform: translateY(-2px);
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

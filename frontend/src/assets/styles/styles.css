@@ -1,0 +1,451 @@
+/* assets/css/styles.css */
+
+/* Capas para organizar la cascada: reset < base < components < utilities */
+@layer reset, base, components, utilities;
+
+/* 1. RESET & VARIABLES (Tokens de diseño) */
+@layer reset {
+    :root {
+        /* Paleta de Colores (Semántica) */
+        --color-bg: #fff;
+        --color-text: #333;
+        --color-primary: #2563eb; /* Azul moderno */
+        --color-primary-hover: #1d4ed8;
+        --color-success: #059669;
+        --color-error: #dc2626;
+        --color-warning: #d97706;
+        --color-muted: #6b7280;
+
+        /* Escala de Espaciado (Base: 1rem = 16px) */
+        --space-1: 0.25rem;  /* 4px */
+        --space-2: 0.5rem;   /* 8px */
+        --space-3: 1rem;     /* 16px */
+        --space-4: 1.5rem;   /* 24px */
+        --space-5: 3rem;     /* 48px */
+
+        /* Tipografía - Escala Fluida (Mobile-First) */
+        --fs-base: 1rem;
+        --fs-sm: 0.875rem;
+        --fs-lg: clamp(1.25rem, 4vw, 1.5rem);    /* Crece entre 20px y 24px */
+        --fs-xl: clamp(1.5rem, 5vw, 2.5rem);     /* Crece entre 24px y 40px */
+        --fs-2xl: clamp(2rem, 6vw, 3.5rem);      /* Crece entre 32px y 56px */
+
+        --lh-base: 1.6;
+        --lh-tight: 1.2;
+
+        /* Breakpoints para Media Queries (Paso 4) */
+        --bp-sm: 40rem;  /* ≈ 640px */
+        --bp-md: 48rem;  /* ≈ 768px */
+        --bp-lg: 64rem;  /* ≈ 1024px */
+        
+        /* Bordes y Sombras */
+        --border-radius: 0.75rem; /* 12px */
+        --border-width: 1px;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    /* Reset moderno y box-sizing */
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Elementos que no existen en nuestro HTML aún, pero es buena práctica resetear */
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        line-height: var(--lh-base);
+        -webkit-font-smoothing: antialiased; /* Mejora renderizado en WebKit */
+    }
+
+    /* Hacer que las imágenes y medios sean responsivos por defecto */
+    img, picture, video, canvas, svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Mejorar el comportamiento por defecto de los elementos de formulario */
+    input, button, textarea, select {
+        font: inherit; /* Hereda la tipografía del documento */
+    }
+
+    /* Evitar desbordamiento de texto en elementos de texto largos */
+    p, h1, h2, h3, h4, h5, h6 {
+        overflow-wrap: break-word;
+    }
+
+    /* Respetar la preferencia del usuario por reducir el movimiento */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+/* 2. ESTILOS BASE (Tipografía, colores, elementos HTML básicos) */
+@layer base {
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: var(--fs-base);
+        line-height: var(--lh-base);
+        color: var(--color-text);
+        background-color: var(--color-bg);
+    }
+
+    /* Jerarquía de encabezados con escala fluida y márgenes controlados */
+    h1, h2, h3, h4, h5, h6 {
+        line-height: var(--lh-tight);
+        font-weight: 700;
+        margin-bottom: var(--space-3);
+    }
+
+    h1 {
+        font-size: var(--fs-2xl);
+        margin-top: var(--space-4);
+    }
+
+    h2 {
+        font-size: var(--fs-xl);
+        margin-top: var(--space-5);
+    }
+
+    h3 {
+        font-size: var(--fs-lg);
+        margin-top: var(--space-4);
+    }
+
+    p {
+        margin-bottom: var(--space-3);
+    }
+
+    /* Estilo para los enlaces */
+    a {
+        color: var(--color-primary);
+        text-underline-offset: 0.15em;
+    }
+
+    a:hover {
+        color: var(--color-primary-hover);
+    }
+
+    /* Foco accesible y visible (solo para navegación por teclado) */
+    :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    /* Mejorar la selección de texto */
+    ::selection {
+        background-color: var(--color-primary);
+        color: white;
+    }
+}
+
+/* 3. COMPONENTES (Clases reutilizables para bloques de la página) */
+@layer components {
+    /* Utilidad para ocultar visualmente elementos pero mantenerlos accesibles */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Enlace para saltar navegación (mejora accesibilidad) */
+    .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        background: var(--color-primary);
+        color: white;
+        padding: var(--space-2) var(--space-3);
+        z-index: 1000;
+        text-decoration: none;
+    }
+
+    .skip-link:focus {
+        top: 0;
+    }
+
+    /* Clase utilitaria para secciones con espaciado vertical */
+    .section {
+        padding-top: var(--space-5);
+        padding-bottom: var(--space-5);
+    }
+
+    /* Componente Campo de Formulario (Field) */
+    .field {
+        margin-bottom: var(--space-4);
+    }
+
+    .field label {
+        display: block;
+        margin-bottom: var(--space-1);
+        font-weight: 600;
+    }
+
+    .field input, .field textarea {
+        width: 100%;
+        padding: var(--space-3);
+        border: var(--border-width) solid #d1d5db;
+        border-radius: var(--border-radius);
+    }
+
+    .field input:focus, .field textarea:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+    .field .error {
+        display: block;
+        margin-top: var(--space-1);
+        color: var(--color-error);
+        font-size: var(--fs-sm);
+    }
+
+    /* Estados de validación para formularios (Paso 7) */
+    .is-invalid {
+        border-color: var(--color-error) !important;
+    }
+
+    .is-valid {
+        border-color: var(--color-success) !important;
+    }
+
+    /* Label para checkboxes (mejora el área de clic) */
+    .checkbox-label {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-2);
+        cursor: pointer;
+        font-weight: normal;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+        margin-top: 0.25em; /* Alineación visual óptima */
+    }
+
+    /* Contenedor de estado del formulario (Paso 7) */
+    .form-status {
+        margin-top: var(--space-4);
+        padding: var(--space-3);
+        border-radius: var(--border-radius);
+    }
+
+    .form-status[aria-live="polite"] {
+        background-color: #f0f9ff; /* Azul muy claro */
+        color: var(--color-primary);
+    }
+}
+
+/* 4. Utilidades (Clases auxiliares para ajustes específicos) */
+@layer utilities {
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+
+    .mt-1 { margin-top: var(--space-1); }
+    .mt-2 { margin-top: var(--space-2); }
+    .mt-3 { margin-top: var(--space-3); }
+    .mt-4 { margin-top: var(--space-4); }
+    .mt-5 { margin-top: var(--space-5); }
+
+    .mb-1 { margin-bottom: var(--space-1); }
+    .mb-2 { margin-bottom: var(--space-2); }
+    .mb-3 { margin-bottom: var(--space-3); }
+    .mb-4 { margin-bottom: var(--space-4); }
+    .mb-5 { margin-bottom: var(--space-5); }
+}
+
+/* MEDIA QUERIES (Diseño Responsive - Mobile-First) */
+
+/* Navegación Responsive */
+@media (min-width: 48rem) { /* --bp-md */
+    /* Oculta el botón de toggle del menú en desktop */
+    .nav__toggle {
+        display: none;
+    }
+    
+    /* Muestra el menú en línea y ajusta su posición y estilo para desktop */
+    .nav__menu {
+        position: static;
+        flex-direction: row;
+        gap: var(--space-4);
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        /* Esto anula los estilos que ocultan el menú en móvil (que se añadirán con JS/clase) */
+        display: flex !important; /* !important para sobreescribir el estado oculto por JS */
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+/* Hero: Si se añade una imagen, se puede usar una grid de 2 columnas en desktop */
+@media (min-width: 64rem) { /* --bp-lg */
+    .hero__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: var(--space-5);
+    }
+}
+
+/* Formulario Responsive */
+@media (min-width: 48rem) { /* --bp-md */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-4);
+    }
+
+/* Asegura que los campos que deben ocupar todo el ancho lo hagan */
+
+    .form-grid--2 .field--full-width {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Ajustes de Tipografía y Espaciado para pantallas grandes */
+@media (min-width: 64rem) { /* --bp-lg */
+    body {
+        /* Opcional: Aumentar ligeramente el tamaño base de la fuente */
+        font-size: 1.05rem;
+    }
+
+    .section {
+        /* Aumentar el espaciado vertical entre secciones */
+        padding-top: var(--space-6);
+        padding-bottom: var(--space-6);
+    }
+
+    h1 {
+        margin-top: var(--space-6);
+    }
+}
+
+/* Testimonios en columnas */
+@media (min-width: 48rem) { /* --bp-md */
+    .testimonials__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+    }
+}
+
+/* Buenas Practicas para imagenes y medios */
+img {
+    max-width: 100%;
+    height: auto; /* Mantener la proporción */
+    /* object-fit: cover; util para imagenes de fondo que deben llenar su contenedor */
+}
+
+/*Asgurar que los frames sean responsivos*/
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ESTILOS CSS PARA EL BOTON "VOLVER ARRIBA" */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* --- AJUSTE FOOTER HORIZONTAL --- */
+.footer .container {
+    display: flex;
+    justify-content: space-between; /* Separa los elementos a los extremos */
+    align-items: center;            /* Centra verticalmente */
+    flex-wrap: wrap;                /* Permite que baje si la pantalla es muy pequeña */
+    gap: 20px;                      /* Espacio mínimo entre elementos */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Poner la lista de enlaces legales en horizontal */
+.footer nav ul {
+    display: flex;
+    gap: 15px;          /* Espacio entre los enlaces */
+    list-style: none;   /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+}
+
+/* Quitar el estilo cursiva por defecto de la etiqueta address */
+.footer address {
+    font-style: normal;
+    margin: 0;
+}
+
+/* --- ESTILOS ACORDEÓN FAQ (Paso 4) --- */
+.faq-answer {
+    max-height: 0;          /* Altura 0 = oculto */
+    overflow: hidden;       /* Esconde el texto que sobra */
+    transition: max-height 0.3s ease-out; /* Animación suave */
+    padding-left: 1rem;     /* Un poco de sangría visual */
+    padding-right: 1rem;
+}
+
+.faq-answer.is-open {
+    max-height: 300px;      /* Altura suficiente para mostrar el texto */
+    padding-top: 1rem;      /* Espacio arriba cuando se abre */
+    padding-bottom: 1rem;   /* Espacio abajo cuando se abre */
+}
+
+/* Opcional: Rotar el icono + cuando se abre */
+.faq-question[aria-expanded="true"] .icon {
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}

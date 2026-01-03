@@ -1,0 +1,60 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Efecto borroso opcional */
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  width: 90%;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Tamaños del Modal */
+.modal--small { max-width: 400px; }
+.modal--medium { max-width: 600px; }
+.modal--large { max-width: 800px; }
+
+.modal__header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal__close {
+  font-size: 1.5rem !important;
+  padding: 0.5rem !important;
+  line-height: 1 !important;
+  color: #666;
+}
+
+.modal__body {
+  padding: 1.5rem;
+  overflow-y: auto; /* Scroll interno si el contenido es muy largo */
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
