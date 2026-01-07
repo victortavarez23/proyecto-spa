@@ -15,10 +15,28 @@ dotenv.config();
 
 const app = express();
 
-// --- CONFIGURACIÓN DE CORS (Hardcoded) ---
+// --- CONFIGURACIÓN DE CORS (Dinámica y Segura) ---
+const allowedOrigins = [
+    process.env.CLIENT_URL,      // La URL de Render (Producción)
+    'http://localhost:5173',     // Frontend local 
+    'http://localhost:3000',     // Frontend alternativo (por si acaso)
+    'http://localhost:5000',      // Para pruebas locales del backend
+    'http://localhost'
+];
+
 app.use(cors({
-    origin: 'http://localhost:3000', // Solo permitimos al Frontend exacto
-    credentials: true,
+    origin: function (origin, callback) {
+        // Permitir requests sin 'origin' (como Postman, apps móviles o curl)
+        if (!origin) return callback(null, true);
+        
+        // Verificar si el origen está en la lista blanca
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'La política CORS de este sitio no permite acceso desde el origen especificado.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true, // Permite enviar cookies/tokens
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));

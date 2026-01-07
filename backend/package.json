@@ -4,11 +4,9 @@
   "description": "Backend para la SPA de React - Laboratorio 6",
   "main": "server.js",
   "type": "module",
-  "scripts": {
-    "start": "node server.js",
+ "scripts": {
     "dev": "nodemon server.js",
-    "seed": "node scripts/seedDatabase.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [
     "nodejs",
