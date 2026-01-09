@@ -1,16 +1,17 @@
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react'; // 1. Importamos lazy y Suspense
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext'; // <--- IMPORTANTE: Conectar el contexto
+import { AuthProvider } from './context/AuthContext';
 
-// --- LAYOUT GLOBAL ---
+// --- LAYOUT GLOBAL (Estos se quedan estáticos porque se ven siempre) ---
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import WindowSize from './components/WindowSize/WindowSize';
-import ProtectedRoute from './components/ProtectedRoute'; // Usaremos el componente inteligente
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
-// --- IMPORTS DINÁMICOS ---
+// --- 2. IMPORTS DINÁMICOS (Code Splitting) ---
+// El navegador solo descargará estos archivos cuando el usuario visite la ruta
 const HomePage = lazy(() => import('./pages/HomePage'));
 const RegisterForm = lazy(() => import('./components/sections/RegisterForm/RegisterForm'));
 const ContactForm = lazy(() => import('./components/sections/ContactForm/ContactForm'));
@@ -19,19 +20,19 @@ const Cart = lazy(() => import('./components/Cart/Cart'));
 const UserList = lazy(() => import('./pages/UsersPage'));
 const Services = lazy(() => import('./pages/Services/Services'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
-const Dashboard = lazy(() => import('./pages/Dashboard')); // Tu archivo Dashboard.js
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
-// Componente de carga
+// Componente de carga (Fallback) que se muestra mientras descarga el chunk
 const Loading = () => (
   <div style={{ padding: '50px', textAlign: 'center', fontSize: '1.5rem', color: '#666' }}>
-    🌀 Cargando contenido...
+    🌀 Cargando aplicación...
   </div>
 );
 
 function App() {
-  useLocation();
+  useLocation(); // Hook necesario para router
 
   // Scroll to top automático
   if (typeof window !== 'undefined') {
@@ -39,9 +40,9 @@ function App() {
   }
 
   return (
-    // 1. Envolvemos TODA la app en el AuthProvider
     <AuthProvider>
       <div className="App">
+        {/* Elementos fijos UI */}
         <div style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 9999 }}>
           <ThemeToggle />
         </div>
@@ -49,9 +50,10 @@ function App() {
         <Header />
 
         <main>
+          {/* 3. Envolvemos las rutas en Suspense */}
           <Suspense fallback={<Loading />}>
             <Routes>
-              {/* Rutas Públicas */}
+              {/* --- Rutas Públicas --- */}
               <Route path="/" element={<HomePage />} />
               <Route path="/registro" element={<div style={{ padding: '50px 0' }}><RegisterForm /></div>} />
               <Route path="/contacto" element={<div style={{ padding: '50px 0' }}><ContactForm /></div>} />
@@ -61,10 +63,9 @@ function App() {
               <Route path="/servicios/*" element={<Services />} />
               <Route path="/servicio/:serviceId" element={<ServiceDetail />} />
               
-              {/* Login ya no necesita props manuales, usa el contexto */}
               <Route path="/login" element={<LoginPage />} />
 
-              {/* RUTA PROTEGIDA: El componente ProtectedRoute verificará el contexto él mismo */}
+              {/* --- Rutas Protegidas --- */}
               <Route 
                 path="/dashboard" 
                 element={
@@ -74,6 +75,7 @@ function App() {
                 } 
               />
 
+              {/* 404 */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

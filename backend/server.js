@@ -1,3 +1,4 @@
+import compression from 'compression';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -14,6 +15,9 @@ import contactRoutes from './routes/contact.js';
 dotenv.config();
 
 const app = express();
+
+// OPTIMIZACIÓN 1: Compresión Gzip
+app.use(compression());
 
 // --- 1. MIDDLEWARE DE SEGURIDAD HTTPS (Solo Producción) ---
 app.use((req, res, next) => {
